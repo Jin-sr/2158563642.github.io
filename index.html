@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>To 阿雨的一封信</title>
+	</head>
+	<body>
+		<!DOCTYPE html>
+		<html lang="zh-CN">
+		<head>
+		    <meta charset="UTF-8">
+		    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		    <title>To 阿雨的一封信</title>
+		    <script src="https://cdn.tailwindcss.com"></script>
+		    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		    <script>
+		        // Tailwind 配置：紫藤花主题色
+		        tailwind.config = {
+		            theme: {
+		                extend: {
+		                    colors: {
+		                        wisteria: { // 紫藤花主色系
+		                            light: '#f3e8ff', // 浅紫（背景色）
+		                            DEFAULT: '#9333ea', // 紫藤紫（主色）
+		                            dark: '#6b21a8'    // 深紫（hover/强调色）
+		                        },
+		                        envelope: '#f5f3ff', // 浅紫信封色
+		                        paper: '#ffffff'     // 白色信纸
+		                    },
+		                    fontFamily: {
+		                        love: ['"Microsoft YaHei"', 'SimHei', 'sans-serif']
+		                    }
+		                }
+		            }
+		        }
+		    </script>
+		    <style type="text/tailwindcss">
+		        @layer utilities {
+		            .envelope-flap {
+		                transform-origin: top center;
+		                transition: transform 0.8s ease-in-out;
+		            }
+		            .envelope-flap-closed {
+		                transform: rotateX(0deg);
+		            }
+		            .envelope-flap-open {
+		                transform: rotateX(180deg);
+		            }
+		            .letter-slide {
+		                transition: transform 1s ease-out 0.5s;
+		            }
+		            .letter-hidden {
+		                transform: translateY(0);
+		            }
+		            .letter-visible {
+		                transform: translateY(-20px);
+		            }
+		            .text-shadow {
+		                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		            }
+		            .heart-beat {
+		                animation: heartbeat 1.5s infinite;
+		            }
+		            @keyframes heartbeat {
+		                0%, 100% { transform: scale(1); }
+		                50% { transform: scale(1.1); }
+		            }
+		        }
+		    </style>
+		</head>
+		<body class="bg-wisteria-light min-h-screen font-love flex flex-col items-center justify-start pt-8 pb-16 px-4">
+		    <!-- 页面标题修改为：To 阿雨的一封信 -->
+		    <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-wisteria-dark mb-8 text-center text-shadow">
+		        <i class="fa fa-heart heart-beat text-wisteria mr-2"></i>
+		        To 阿雨的一封信
+		        <i class="fa fa-heart heart-beat text-wisteria ml-2"></i>
+		    </h1>
+		
+		    <!-- 日期验证区域（年、月、日输入框） -->
+		    <div id="date-check" class="w-full max-w-md bg-white rounded-lg shadow-lg p-6 mb-8 transition-all duration-500">
+		        <h2 class="text-xl font-semibold text-wisteria-dark mb-4 text-center">请输入我们的纪念日日期</h2>
+		        <div class="flex flex-col gap-4">
+		            <!-- 年、月、日输入框组 -->
+		            <div class="flex gap-3 justify-center">
+		                <input type="number" id="year" placeholder="年" min="1900" max="2099"
+		                       class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-wisteria focus:border-transparent text-center">
+		                <input type="number" id="month" placeholder="月" min="1" max="12"
+		                       class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-wisteria focus:border-transparent text-center">
+		                <input type="number" id="day" placeholder="日" min="1" max="31"
+		                       class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-wisteria focus:border-transparent text-center">
+		            </div>
+		            <!-- 按钮文字修改为：解锁信封 -->
+		            <button id="check-btn" 
+		                    class="bg-wisteria hover:bg-wisteria-dark text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center gap-2">
+		                <i class="fa fa-unlock-alt"></i> 解锁信封
+		            </button>
+		            <p id="error-msg" class="text-red-500 text-center hidden mt-2"></p>
+		        </div>
+		    </div>
+		
+		    <!-- 信封区域 -->
+		    <div id="envelope-container" class="w-full max-w-2xl bg-envelope rounded-lg shadow-xl overflow-hidden hidden relative">
+		        <!-- 信封盖 -->
+		        <div id="envelope-flap" class="envelope-flap envelope-flap-closed h-20 bg-envelope border-b-2 border-wisteria/20 w-full absolute top-0 z-20"></div>
+		        
+		        <!-- 信纸 -->
+		        <div id="letter" class="letter-slide letter-hidden bg-paper p-8 md:p-12 mt-20 min-h-[800px] relative z-10">
+		            <div class="prose max-w-none text-gray-700 leading-relaxed">
+		                <h2 class="text-2xl md:text-3xl font-bold text-wisteria-dark text-center mb-6">致阿雨</h2>
+		                <p class="mb-4 text-lg">阿雨：</p>
+		                <p class="mb-3">我很抱歉我这么久才来找你 我心里有很多话想跟你好好说 只是我总因为过于喜欢你变得自卑不敢面对你 我害怕展现出不好的一面给你 留下不好的印象</p>
+		                <p class="mb-3">我很抱歉我没问过你是否愿意分手就自己一个人做下决定离开你 对不起 我不应该不说清楚理由就离开你 那几日我父母吵着要离婚 他们吵了其实不止这一次 我分不清到底哪次是真的 我的心情特别特别差劲 晚上一个人躲在被窝里哭 我怀疑结婚真的好么 我怀疑我是不是不应该和你在一起 我又想起你越来越对我冷淡了许多 我也不知道能再说什么 各种不安的想法爆发出来 我再也受不了了</p>
+		                <p class="mb-3">我太过于害怕你离开我 以至于我总想着你要在我身边 但我又想着你是你 不是我的附庸品 我爱你 但首先你是自己其次再来爱我 我第一次去认真爱一个人 以至于我迷失了自我 把你放在了首位 觉得不论你做什么都比我本身重要得多 我以前总是习惯了认真真心对待别人 几乎没有认真爱过自己 给自己吃好的 买自己喜欢的 做自己想做的 没有人认真真心珍惜对待过我 我时常想着我活着有什么意义 又或者我是不是不应该活着 泪水打湿我的枕头的时候 我想起你不知道是应该哭还是笑 是哭我不知道你对我是否真心呢还是笑只要你在就好了呢 我把你当成一种情感寄托 我不知道自己是否真的爱你 爱你什么呢 我觉得我自己一点都不了解你 我特别失败在这场恋爱中 最开始我是只想玩玩的 后面我可能是因为本心想对所有我认识的人好 慢慢的越来越在乎你 想你是我的 不能跟别人玩 后来我跟自己说通 你是自己 但是跟别人玩得跟我说一声 无论是谁 我觉得我太过了 没有对你说出来 我不知道什么是爱 但是我知道怎么对一个人好 可能这是我擅长的</p>
+		                <p class="mb-3">我们分别后一开始我总会在夜里想起你 睡不着觉 抱着娃娃哭诉 想让娃娃告诉你 我想要你回来 可是我却亲手推开了你 我觉得我不应该再去找你了 即使我心里排演过无数遍了可我真正面对你时如针扎在喉咙上说不出口 想说的话全部收了回来 我是胆小鬼 我害怕面对你 我害怕你知道我的缺点 把它当做利刃终有一天刺向我 也许这一天是不可避免的 可我把它想成最坏的结果以至于我不愿意告诉你 我害怕你接受不了这样的我 后面我就慢慢习惯你不在了 虽然时常会想起你 可我知道是我自己离开你的 原因不完全在你 我时常会担心你过得好不好 冬天刚来的时候有没有感冒 有没有好好吃饭 有没有带多一件衣服防冷 有没有照顾好自己 还有 你有没有想我</p>
+		                <p class="mb-3">我觉得我没有资格再去找你了 我把自己贬得很低 只是想把你当成我的救赎 这样我就有活下去的动力 不会再整天浑浑噩噩 不知道做什么 不知道为什么活着 没有目标</p>
+		                <p class="mb-3">我总是会没有安全感 我希望你能够在我身边给足我的不安和焦虑 我太贪心以至于我变得只想要你是我的 我焦虑有一天你会离开我 我焦虑我们再也没有交集 我焦虑我们再也没有未来 我其实很讨厌自己过于敏感 想的不好的想法过多 可我有时也认为给我这种天赋是让我去好好对待每一个人 去爱我所爱之人</p>
+		                <p class="mb-3">我很抱歉我没有去好好了解你 我觉得能够了解你的方式很少 我也确实了解你很少 我似乎摸不清楚你在想什么 你认为我是一个怎样的人 你认为我是真心去爱你的吗 你会不会认为我很矫情 你会不会认为我很无理取闹</p>
+		                <p class="mb-3">我最近慢慢知道怎么去爱自己 我把自己看得越来越重要了 我愿意说出我的感受了 我有勇气表达了 爱一个人的同时不迷失自己 坚定了方向后我才有了勇气和自信找你 分手这段时间我一直没有勇气和自信去找你</p>
+		                <p class="mb-3">我非常抱歉你来找我那天我对你的态度过于恶劣 我觉得你已经不喜欢我了 我们没必要纠缠下去了 我说了很多伤你心的话 我很对不起你 想挽留的话那天我说不出口 如鲠在喉 变成了伤你的话</p>
+		                <p class="mb-3">我以前初中抑郁比较重一些 每天活的如同行尸走肉 心情千变万化 早上面对同学还很开心 晚上就自己一个人躲在被窝里抱着娃娃哭 哭到累了睡着 我没有去医院看过我是否有抑郁症 因为我不敢告诉我父母 怕他们觉得我矫情不想上学找的借口 所以我也不清楚我究竟是不是 只是有很长一段时间我一直想去死 不愿活在这世上 活得好痛苦 每天对我来说都是折磨 死循环 我迷路了 迷失在自己的痛苦里出不来</p>
+		                <p class="mb-3">如果可以 我想回到那天和你相遇 我一遍庆幸自己遇到了你 有活下去的动力 我一边痛自己不应该遇到你 配不上你 长痛不如短痛</p>
+		                <p class="mb-3">如果可以 我想和你重新认识 慢慢去了解你 慢慢去喜欢你 慢慢去在乎你 慢慢去爱你 我从不觉得你烦到我了 只有我心情差的时候才会认为什么都很烦 我不烦你 我不烦你 我不烦你！我需要你 你可不可以不要离开我 可不可以 阿雨</p>
+		                <p class="mb-3">如果可以 我可以多了解阿雨你一点吗 你可以多跟我聊聊天分享自己的日常吗 你可以多在乎我一点吗 你可以多跟我表达自己内心真实的感受吗 这样我觉得我们就没有距离感了 让我感觉你很亲切 让我觉得我们是真正意义上的亲人</p>
+		                <p class="mb-6">如果可以 阿雨你就是我最《特别的人》 所以 你愿意重新认识我吗？</p>
+		                <!-- 书写人颜色改为黑色 -->
+		                <p class="text-right text-gray-800 font-medium text-lg">——陈伟榕</p>
+		                <!-- 日期修改为2025年11月29日 -->
+		                <p class="text-right text-gray-500 italic">2025年11月29日</p>
+		            </div>
+		        </div>
+		    </div>
+		
+		    <script>
+		        // 配置：请在这里修改为你们的纪念日日期（年、月、日分别填写）
+		        const CORRECT_YEAR = 2024;   // 纪念日年份
+		        const CORRECT_MONTH = 4;    // 纪念日月份
+		        const CORRECT_DAY = 29;      // 纪念日日期
+		        
+		        // DOM 元素
+		        const dateCheckEl = document.getElementById('date-check');
+		        const envelopeContainerEl = document.getElementById('envelope-container');
+		        const yearEl = document.getElementById('year');
+		        const monthEl = document.getElementById('month');
+		        const dayEl = document.getElementById('day');
+		        const checkBtnEl = document.getElementById('check-btn');
+		        const errorMsgEl = document.getElementById('error-msg');
+		        const envelopeFlapEl = document.getElementById('envelope-flap');
+		        const letterEl = document.getElementById('letter');
+		
+		        // 移除原有的当前日期动态设置，直接使用固定日期
+		        // 日期验证函数
+		        checkBtnEl.addEventListener('click', () => {
+		            // 获取输入的年、月、日并转为数字
+		            const inputYear = parseInt(yearEl.value);
+		            const inputMonth = parseInt(monthEl.value);
+		            const inputDay = parseInt(dayEl.value);
+		            
+		            // 检查是否有未输入的内容
+		            if (isNaN(inputYear) || isNaN(inputMonth) || isNaN(inputDay)) {
+		                errorMsgEl.textContent = '请完整输入年、月、日';
+		                errorMsgEl.classList.remove('hidden');
+		                shakeInputBoxes(); // 所有输入框抖动
+		                return;
+		            }
+		
+		            // 检查月份和日期的合法性
+		            if (inputMonth < 1 || inputMonth > 12) {
+		                errorMsgEl.textContent = '月份请输入1-12之间的数字';
+		                errorMsgEl.classList.remove('hidden');
+		                monthEl.classList.add('animate-shake');
+		                setTimeout(() => monthEl.classList.remove('animate-shake'), 500);
+		                return;
+		            }
+		            if (inputDay < 1 || inputDay > 31) {
+		                errorMsgEl.textContent = '日期请输入1-31之间的数字';
+		                errorMsgEl.classList.remove('hidden');
+		                dayEl.classList.add('animate-shake');
+		                setTimeout(() => dayEl.classList.remove('animate-shake'), 500);
+		                return;
+		            }
+		
+		            // 验证日期是否正确
+		            if (inputYear === CORRECT_YEAR && inputMonth === CORRECT_MONTH && inputDay === CORRECT_DAY) {
+		                // 验证成功
+		                errorMsgEl.classList.add('hidden');
+		                dateCheckEl.classList.add('opacity-0', 'scale-95');
+		                setTimeout(() => {
+		                    dateCheckEl.classList.add('hidden');
+		                    envelopeContainerEl.classList.remove('hidden');
+		                    
+		                    // 打开信封动画
+		                    setTimeout(() => {
+		                        envelopeFlapEl.classList.remove('envelope-flap-closed');
+		                        envelopeFlapEl.classList.add('envelope-flap-open');
+		                        
+		                        // 滑出信纸
+		                        setTimeout(() => {
+		                            letterEl.classList.remove('letter-hidden');
+		                            letterEl.classList.add('letter-visible');
+		                        }, 300);
+		                    }, 500);
+		                }, 500);
+		            } else {
+		                // 验证失败
+		                errorMsgEl.textContent = '纪念日日期错误，请重新输入';
+		                errorMsgEl.classList.remove('hidden');
+		                shakeInputBoxes(); // 所有输入框抖动
+		            }
+		        });
+		
+		        // 为输入框添加回车触发验证
+		        [yearEl, monthEl, dayEl].forEach(input => {
+		            input.addEventListener('keydown', (e) => {
+		                if (e.key === 'Enter') {
+		                    checkBtnEl.click();
+		                }
+		            });
+		        });
+		
+		        // 输入框抖动函数
+		        function shakeInputBoxes() {
+		            [yearEl, monthEl, dayEl].forEach(input => {
+		                input.classList.add('animate-shake');
+		                setTimeout(() => input.classList.remove('animate-shake'), 500);
+		            });
+		        }
+		
+		        // 添加抖动动画样式
+		        const style = document.createElement('style');
+		        style.textContent = `
+		            @keyframes shake {
+		                0%, 100% { transform: translateX(0); }
+		                25% { transform: translateX(-5px); }
+		                75% { transform: translateX(5px); }
+		            }
+		            .animate-shake {
+		                animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+		            }
+		        `;
+		        document.head.appendChild(style);
+		    </script>
+		</body>
+		</html>
+	</body>
+</html>
